@@ -10,16 +10,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'scarif.azurecr.io'
-    command: 'login'
 
 - task: Docker@2
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: drop
